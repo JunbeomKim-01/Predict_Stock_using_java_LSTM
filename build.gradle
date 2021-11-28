@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform("ai.djl:bom:0.9.0")
+    implementation 'ai.djl:api:0.14.0'
+    implementation 'com.github.jankroken:commandline:1.7.0'
+    implementation 'org.jetbrains:annotations:20.1.0'
+
+    runtimeOnly 'ai.djl.mxnet:mxnet-engine:0.14.0'
+    //runtimeOnly "ai.djl.mxnet:mxnet-native::mac-x86_64"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
+    implementation 'commons-cli:commons-cli:20040117.000000'
+    implementation 'org.tensorflow:tensorflow-core-platform:0.3.3'
+
+    //implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+
+    implementation 'org.bytedeco.javacpp-presets:openblas:0.3.5-1.4.4'
+    implementation 'org.bytedeco.javacpp-presets:openblas-platform:0.3.5-1.4.4'
+
+    implementation 'org.nd4j:nd4j-native:0.9.1'
+    implementation 'org.nd4j:nd4j-native-platform:0.9.1'
+    implementation 'org.deeplearning4j:deeplearning4j-core:0.9.1'
+
+    implementation 'org.slf4j:slf4j-api:1.7.5'
+    implementation 'org.slf4j:slf4j-simple:1.6.4'
+
+    implementation 'org.jfree:jfreechart:1.5.3'
+    implementation 'org.bytedeco:javacv-platform:1.5.6'
+}
+
+javafx {
+    version = "17"
+    modules = [ 'javafx.controls' ]
+}
+
+test {
+    useJUnitPlatform()
+}
