@@ -1,21 +1,15 @@
 package Database;
 
-import DatabaseQuery.Context;
-import DatabaseQuery.SelecQuery;
 import Storage.Storage;
-import org.bytedeco.librealsense.context;
-import org.bytedeco.opencv.opencv_stitching.Stitcher;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DBAminDAO extends DatabaseAcessObject {
-    static Connection connection;
     public static int login() throws SQLException {
         String query= "SELECT Password From Admin Where Id=?";
-        connection =DatabaseAcessObject.getConnection();
+        Connection connection =DatabaseAcessObject.getConnection();
         PreparedStatement preparedStatement= connection.prepareStatement(query);
         preparedStatement.setString(1,Storage.getIteam("ID"));
         ResultSet row= preparedStatement.executeQuery();
@@ -40,6 +34,3 @@ public class DBAminDAO extends DatabaseAcessObject {
     }
 
 }
-
-
-//알고리즘 바꿈-> 전랴패턴

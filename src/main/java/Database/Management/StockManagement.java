@@ -1,5 +1,6 @@
-package Database;
+package Database.Management;
 
+import Database.DatabaseAcessObject;
 import DatabaseQuery.Context;
 import DatabaseQuery.DeletQuery;
 import DatabaseQuery.InsertQuery;
@@ -9,12 +10,8 @@ import clearScreen.*;
 
 public class StockManagement extends DatabaseAcessObject
 {
-    public StockManagement() throws Exception {
-        clearScreen.clear();
-        System.out.println("1: 주식 종목 추가");
-        System.out.println("2: 주식 종목 삭제");
-        Scanner scanner= new Scanner(System.in);
-        switch (scanner.nextInt()){
+    public StockManagement(int select) throws Exception {
+        switch (select){
             case 1:
                 addStock();
                 break;

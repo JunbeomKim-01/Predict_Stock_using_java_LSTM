@@ -7,7 +7,7 @@ import Storage.Storage;
 import clearScreen.*;
 import java.util.ArrayList;
 
-public class Portfolio extends Menu{
+public class Portfolio implements Menu{
     @Override
     public void showMenu() throws Exception {
         Context context = new Context(new SelecQuery());

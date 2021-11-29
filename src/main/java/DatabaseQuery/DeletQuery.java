@@ -40,6 +40,5 @@ public class DeletQuery implements Query{
            preparedStatement.close();
        }
 
-        //TODO
     }
 }

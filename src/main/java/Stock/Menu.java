@@ -1,5 +1,5 @@
 package Stock;
 
-public abstract class Menu {
+public interface Menu {
     abstract void showMenu() throws Exception;
 }

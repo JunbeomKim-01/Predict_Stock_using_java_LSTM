@@ -1,7 +1,6 @@
 package Database;
 
-import Login.UserLogin;
-
+import Storage.Storage;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,15 +8,15 @@ import java.sql.SQLException;
 
 public class AIAdminDAO extends DatabaseAcessObject{
 
-    public static int login(String id, String pw) throws SQLException {
-        String query= "SELECT Password From User Where Id=?";
+    public static int login() throws SQLException {
+        String query= "SELECT Password From AIAdmin Where Id=?";
         Connection connection =DatabaseAcessObject.getConnection();
         PreparedStatement preparedStatement= connection.prepareStatement(query);
-        preparedStatement.setString(1,id);
+        preparedStatement.setString(1,Storage.getIteam("ID"));
         ResultSet row= preparedStatement.executeQuery();
 
         if(row.next()){
-            if(row.getString(1).contentEquals(pw)){
+            if(row.getString(1).contentEquals(Storage.getIteam("PASSWORD"))){
                 System.out.println("[Admin 인증에 성공하였습니다.]");
                 return 1;//정상
             }

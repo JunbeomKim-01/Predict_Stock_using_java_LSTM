@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Api {
-    public static void main(String[] args) {
-        getStockData(10,"005930");
-    }
+//    public static void main(String[] args) {
+//        getStockData(10,"005930");
+//    }
     private static final Logger log = LoggerFactory.getLogger(StockPrediction.class);
     static int nowPrice = 0;
 

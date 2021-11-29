@@ -14,17 +14,17 @@ public class LoginControll {
 
     static Connection con =DatabaseAcessObject.getConnection();
 
-   public static Login call(int userInput) throws Exception {
-        switch (userInput) {
-            case 1:
-                return new UserLogin();
-            case 2:
-                return new DBAdminLogin();
-            case 3:
-                return new AIAdminLogin();
-        }
-        return null;
-    }
+//   public static Login call(int userInput) throws Exception {
+//        switch (userInput) {
+//            case 1:
+//                return new UserLogin();
+//            case 2:
+//                return new DBAdminLogin();
+//            case 3:
+//                return new AIAdminLogin();
+//        }
+//        return null;
+//    }
 
     public static int memberCheck(String id)throws Exception{
         String query="SELECT id FROM User Where id=?";

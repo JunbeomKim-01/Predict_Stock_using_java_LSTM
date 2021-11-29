@@ -13,12 +13,9 @@ import Storage.*;
 import clearScreen.*;
 import Data.*;
 
-public class StockMenu extends Menu{
-    String stockCode;
+public class StockMenu implements Menu{
     ArrayList<String> menuList= new ArrayList<>();
     String query;
-    String selecStockname;
-
     public void selectMenu(){
         System.out.println("원하시는 종목을 고르시오");
         Scanner scanner = new Scanner(System.in);
@@ -27,10 +24,8 @@ public class StockMenu extends Menu{
         Storage.setStockName(menuList.get(select-1));//주식 이름 저장
         crawling.codeCrawling();// 저장된 주식이름으로 주식코드 설정
     }
-
     public void selectPrice() throws Exception {
        try{
-           //TODO 여기서 포트폴리오 추가 됨
            System.out.println("몇 주를 구매하시겠습니까?");
            Scanner scanner1 = new Scanner(System.in);
            Storage.setStockPayment(scanner1.nextLine());
@@ -38,7 +33,7 @@ public class StockMenu extends Menu{
            Portfolio portfolio = new Portfolio();
            portfolio.setPortfolio();
 
-           StockPrediction.runAI();
+           StockPrediction.runAI(1);
        }
        catch (Exception e){
            e.printStackTrace();

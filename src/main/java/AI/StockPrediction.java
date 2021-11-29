@@ -25,11 +25,9 @@ import org.tensorflow.op.strings.StringFormat;
 
 public class StockPrediction {
     private static final Logger log = LoggerFactory.getLogger(StockPrediction.class);
-
     private static int exampleLength = 20; // time series length, assume 22 working days per month
-
     private static double finalyPredicPrice=0.0;
-    public static void runAI() throws IOException {
+    public static void runAI(int select) throws IOException {
         //String file = new ClassPathResource("prices-split-adjusted.csv").getFile().getAbsolutePath();
 //        symbol = "GOOG"; // stock name
         int batchSize = 64; // mini-batch size
@@ -69,15 +67,15 @@ public class StockPrediction {
         } else {
             double max = iterator.getMaxNum(category);
             double min = iterator.getMinNum(category);
-            predictPriceOneAhead(net, test, max, min, category);
-            showPredict();
+            predictPriceOneAhead(select,net, test, max, min, category);
         }
+
+
         //System.out.println("Done...");
 
 
     }
-
-    private static void showPredict(){
+    public static void showPredict(){
         int nowPrice= Api.getNowPrice();
         double yeild;
         if (finalyPredicPrice<nowPrice){
@@ -96,7 +94,7 @@ public class StockPrediction {
         System.out.println("한 달 수익은 :"+result+"원 입니다.");
     }
     /** Predict one feature of a stock one-day ahead */
-    private static void predictPriceOneAhead (MultiLayerNetwork net, List<Pair<INDArray, INDArray>> testData, double max, double min, PriceCategory category) {
+    private static void predictPriceOneAhead (int select,MultiLayerNetwork net, List<Pair<INDArray, INDArray>> testData, double max, double min, PriceCategory category) {
         double[] predicts = new double[testData.size()];
         double[] actuals = new double[testData.size()];
         for (int i = 0; i < testData.size(); i++) {
@@ -105,20 +103,23 @@ public class StockPrediction {
         }
         log.info("Print out Predictions and Actual Values...");
         log.info("Predict,Actual");
-        for (int i = 0; i < predicts.length; i++) log.info(predicts[i] + "," + actuals[i]);
+        //for (int i = 0; i < predicts.length; i++) log.info(predicts[i] + "," + actuals[i]);
 
-        //log.info("Plot...");
+
 
          finalyPredicPrice= predicts[0];// 최종 예측가격
 
+        switch (select){
+            case 1:
+                showPredict();
+                break;
+            case 2:
+                log.info("Plot...");
+                PlotUtil.plot(predicts, actuals, String.valueOf(category));
+                break;
+        }
         //그래프
-        //PlotUtil.plot(predicts, actuals, String.valueOf(category));
     }
-
-    private static void predictPriceMultiple (MultiLayerNetwork net, List<Pair<INDArray, INDArray>> testData, double max, double min) {
-
-    }
-
     /** Predict all the features (open, close, low, high prices and volume) of a stock one-day ahead */
     private static void predictAllCategories (MultiLayerNetwork net, List<Pair<INDArray, INDArray>> testData, INDArray max, INDArray min) {
         INDArray[] predicts = new INDArray[testData.size()];

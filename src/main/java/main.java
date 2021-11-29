@@ -1,33 +1,35 @@
 import java.util.Scanner;
-import Storage.*;
+
+import Login.Account.Account;
 import Database.DatabaseAcessObject;
 import Login.*;
-import Storage.Storage;
+import Login.Account.AccountFactory;
+import Login.Account.AdminAccount;
+import Login.Account.UserAccount;
 import clearScreen.*;
 
 public class main {
     public static void main(String[] args) throws Exception {
-        Login person;
-        //Storage.makeStorage();
+        Account account;
         DatabaseAcessObject.connectDatabase();
+        AccountFactory accountFactory = new AccountFactory();
+
         System.out.println("User Login : 1");
-        System.out.println("DB-Admin Login : 2");
-//        System.out.println("AIAdmin Login : 3");
+        System.out.println("Admin Login : 2");
         Scanner scanner = new Scanner(System.in);
         int userInput = scanner.nextInt();
+        account=accountFactory.createAccount(userInput);
         clearScreen.clear();
 
         try {
-            person = LoginControll.call(userInput);
-            if (person instanceof UserLogin) {
-                UserLogin user  = (UserLogin) person;
+            if (account instanceof UserAccount) {
+                UserAccount user  = (UserAccount) account;
+                user.login();
             }
-            else if(person instanceof DBAdminLogin) {
-                DBAdminLogin user= (DBAdminLogin) person;
+            else if(account instanceof AdminAccount) {
+                AdminAccount adminAccount= (AdminAccount) account;
+                adminAccount.login();
             }
-//            else if(person instanceof DBAdminLogin) {
-//                AIAdminLogin user= (AIAdminLogin) person;
-//            }
         }
         catch (Exception e){
             e.printStackTrace();

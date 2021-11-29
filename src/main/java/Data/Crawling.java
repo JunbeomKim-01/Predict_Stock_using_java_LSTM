@@ -5,8 +5,7 @@ public class Crawling {
 
         Storage.getIteam("CODE");
         /*
-        크롤링 부분 -> 주식 이름으로 주식 코드 가져옴
-        //TODO
+        //TODO 크롤링 부분 -> 주식 이름으로 주식 코드 가져옴
          */
         Storage.setCode("005930");
     }
