@@ -79,10 +79,10 @@ public class StockPrediction {
         int nowPrice= Api.getNowPrice();
         double yeild;
         if (finalyPredicPrice<nowPrice){
-            yeild= ((nowPrice-finalyPredicPrice)/nowPrice)*-10000;
+            yeild= ((nowPrice-finalyPredicPrice)/nowPrice)*-100;
         }
        else {
-            yeild= ((finalyPredicPrice-nowPrice)/nowPrice)*10000;
+            yeild= ((finalyPredicPrice-nowPrice)/nowPrice)*100;
         }
         yeild= Double.parseDouble(String.format("%.2f",yeild));
         clearScreen.clear();

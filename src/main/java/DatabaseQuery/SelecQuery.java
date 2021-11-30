@@ -26,7 +26,6 @@ public class SelecQuery implements Query{
     protected void selectTable(Connection connection,String tableName) throws SQLException {
         //투자 종목이나 포트폴리오 볼 때
         ArrayList<ArrayList<String>> result =new ArrayList<>();
-
         if(tableName=="StockCode"){
             String query="SELECT * FROM STOCKCODE";
             PreparedStatement preparedStatement = connection.prepareStatement(query);

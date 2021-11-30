@@ -9,7 +9,7 @@ public class Context{
         this.query=query;
     }
 
-    public void excuteQuery(String name,String patch) throws Exception { // 해당 객체의 알고리즘을 실행
+    public void excuteQuery(String name,String patch) throws Exception { // 해당 객체의 doQuery을 실행
         query.doQuery(name,patch);
     }
 }
