@@ -8,10 +8,9 @@ public class AIAdminInterface implements UI{
     public void showInterface() throws Exception {
         int select=0;
         while (select!=2){
-
             clearScreen.clear();
             System.out.println("1:정확도 그래프 보이기");
-            System.out.println("2프로그램 종료");
+            System.out.println("2:프로그램 종료");
             Scanner scanner = new Scanner(System.in);
             select= scanner.nextInt();
             switch (select){

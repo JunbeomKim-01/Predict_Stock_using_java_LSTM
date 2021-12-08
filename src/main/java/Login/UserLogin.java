@@ -1,16 +1,14 @@
 package Login;
 
 import Database.UserDAO;
-import DatabaseQuery.Context;
-import DatabaseQuery.DeletQuery;
-import Stock.*;
+
 import UI.*;
 import clearScreen.*;
 import java.util.Scanner;
 import Storage.*;
 
 
-public class UserLogin extends Person<UserDAO> implements Login {
+public class UserLogin implements Login {
     public void loginCheck() throws Exception {
         try {
             System.out.println("기존 ID로 로그인: 1");
@@ -47,14 +45,6 @@ public class UserLogin extends Person<UserDAO> implements Login {
         Storage.setPassword(scanner1.nextLine());
 
         clearScreen.clear();
-    }
-
-    @Override
-    public void doCall() {
-        //정상
-        this.DAO.Exception("SELECT * FROM DB");
-        //ERROR
-        this.DAO.Exception("INSERT * VALUES(....)");
     }
 
 }

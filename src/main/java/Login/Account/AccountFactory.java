@@ -10,7 +10,7 @@ public class AccountFactory {
                 break;
             case 2:
             case 3:
-                account= new AdminAccount(select);
+                account= new AdminAccount();
                 break;
         }
         return account;

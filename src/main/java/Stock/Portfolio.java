@@ -1,19 +1,19 @@
 package Stock;
-
-import DatabaseQuery.Context;
-import DatabaseQuery.InsertQuery;
-import DatabaseQuery.SelecQuery;
+import DatabaseQuery.QueryCommandController;
 import Storage.Storage;
 import clearScreen.*;
 import java.util.ArrayList;
 
 public class Portfolio implements Menu{
+    QueryCommandController queryCommandController;
+    public Portfolio(){
+        queryCommandController = QueryCommandController.getQueryController();
+    }
     @Override
     public void showMenu() throws Exception {
-        Context context = new Context(new SelecQuery());
-        context.excuteQuery("Table","UserInfo");
-        ArrayList<ArrayList<String>> result =Storage.getSelectResult();
-
+        queryCommandController.selectUserInfo();
+        //TODO <- 상장된 주식 클론
+        ArrayList<ArrayList<String>> result =Storage.getPortfolio();
         clearScreen.clear();
         System.out.println("[현재 "+Storage.getIteam("ID")+"님의 포트폴리오]");
       for(ArrayList<String> sub: result){
@@ -24,7 +24,6 @@ public class Portfolio implements Menu{
 
     }
     void setPortfolio() throws Exception {// UserInfoDB에( ID,NAME,MONEY )INSERT
-        Context context = new Context(new InsertQuery());
-        context.excuteQuery("UserInfo",null);
+        queryCommandController.insertUserInfo();
     }
 }

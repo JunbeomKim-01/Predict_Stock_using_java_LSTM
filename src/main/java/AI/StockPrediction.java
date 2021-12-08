@@ -25,7 +25,7 @@ import org.tensorflow.op.strings.StringFormat;
 
 public class StockPrediction {
     private static final Logger log = LoggerFactory.getLogger(StockPrediction.class);
-    private static int exampleLength = 20; // time series length, assume 22 working days per month
+    private static int exampleLength = 3; // time series length, assume 22 working days per month
     private static double finalyPredicPrice=0.0;
     public static void runAI(int select) throws IOException {
         //String file = new ClassPathResource("prices-split-adjusted.csv").getFile().getAbsolutePath();

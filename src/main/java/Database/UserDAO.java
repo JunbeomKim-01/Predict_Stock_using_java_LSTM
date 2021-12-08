@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import Storage.*;
 
-public class UserDAO extends DatabaseAcessObject {
+public class UserDAO{
 
     public static int login() throws SQLException {
         String query= "SELECT Password From User Where Id=?";
@@ -24,9 +24,5 @@ public class UserDAO extends DatabaseAcessObject {
         }
         System.out.println("아이디 또는 비밀번호가 존재하지 않습니다.");
         return 0;//비정상
-    }
-    @Override
-    protected boolean Authoirity(String query) {
-        return query.toUpperCase().startsWith("SELECT");
     }
 }

@@ -1,7 +1,6 @@
 package UI;
 
-import DatabaseQuery.Context;
-import DatabaseQuery.DeletQuery;
+import DatabaseQuery.QueryCommandController;
 import Stock.Portfolio;
 import Stock.StockMenu;
 import clearScreen.clearScreen;
@@ -40,8 +39,9 @@ public class UserInterface implements UI{
                     String select= scanner.nextLine();
                     if(select == "no"){}
                     else if(select=="yes"){
-                        Context context = new Context(new DeletQuery());
-                        context.excuteQuery("User",null);
+                        QueryCommandController queryCommandController = QueryCommandController.getQueryController();
+                        queryCommandController.deleteUser();
+                        userSelectNumber=4;
                     }
                     break;
             }

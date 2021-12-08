@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.*;
 import Data.*;
 
-
+//make_ring(), make_star(),
 
 public class StockDataSetIterator implements DataSetIterator{
     private final Map<PriceCategory, Integer> featureMapIndex = ImmutableMap.of(PriceCategory.OPEN, 0, PriceCategory.HIGH, 1,
@@ -23,7 +23,7 @@ public class StockDataSetIterator implements DataSetIterator{
 
     private final int VECTOR_SIZE = 5; // number of features for a stock data
     private int miniBatchSize; // mini-batch size
-    private int exampleLength = 22; // default 22, say, 22 working days per month
+    private int exampleLength = 10; // default 22, say, 22 working days per month
     private int predictLength = 1; // default 1, say, one day ahead prediction
 
     /** minimal values of each feature in stock dataset */
@@ -83,6 +83,7 @@ public class StockDataSetIterator implements DataSetIterator{
             int endIdx = startIdx + exampleLength;
             StockData curData = train.get(startIdx);
             StockData nextData;
+            //스케일링
             for (int i = startIdx; i < endIdx; i++) {
                 int c = i - startIdx;
                 input.putScalar(new int[] {index, 0, c}, (curData.getOpen() - minArray[0]) / (maxArray[0] - minArray[0]));
@@ -154,13 +155,14 @@ public class StockDataSetIterator implements DataSetIterator{
     @Override public DataSet next() { return next(miniBatchSize); }
 
     @org.jetbrains.annotations.NotNull
+
     private List<Pair<INDArray, INDArray>> generateTestDataSet (List<StockData> stockDataList) {
         int window = exampleLength + predictLength;
         List<Pair<INDArray, INDArray>> test = new ArrayList<>();
         for (int i = 0; i < stockDataList.size() - window; i++) {
-            INDArray input = Nd4j.create(new int[] {exampleLength, VECTOR_SIZE}, 'f');
+            INDArray input = Nd4j.create(new int[] {exampleLength, VECTOR_SIZE}, 'f');//INDArray=인덱스가 존재하는 벡터
             for (int j = i; j < i + exampleLength; j++) {
-                StockData stock = stockDataList.get(j);
+                StockData stock = stockDataList.get(j);//input데이터를 스케일링후 데이터 삽입
                 input.putScalar(new int[] {j - i, 0}, (stock.getOpen() - minArray[0]) / (maxArray[0] - minArray[0]));
                 input.putScalar(new int[] {j - i, 1}, (stock.getClose() - minArray[1]) / (maxArray[1] - minArray[1]));
                 input.putScalar(new int[] {j - i, 2}, (stock.getLow() - minArray[2]) / (maxArray[2] - minArray[2]));
@@ -177,7 +179,7 @@ public class StockDataSetIterator implements DataSetIterator{
                 label.putScalar(new int[] {3}, stock.getHigh());
                 label.putScalar(new int[] {4}, stock.getVolume());
             } else {
-                label = Nd4j.create(new int[] {1}, 'f');
+                label = Nd4j.create(new int[] {1}, 'f');// 정답 레이블 작성
                 switch (category) {
                     case OPEN: label.putScalar(new int[] {0}, stock.getOpen()); break;
                     case CLOSE: label.putScalar(new int[] {0}, stock.getClose()); break;
@@ -187,7 +189,7 @@ public class StockDataSetIterator implements DataSetIterator{
                     default: throw new NoSuchElementException();
                 }
             }
-            test.add(new Pair<>(input, label));
+            test.add(new Pair<>(input, label));//Pair 자료구조를 이용하여 (x(input),y(label)) 구조로 테스트 데이터 만듦
         }
         return test;
     }
@@ -199,7 +201,7 @@ public class StockDataSetIterator implements DataSetIterator{
             minArray[i] = Double.MAX_VALUE;
         }
 //        Storage.getIteam("CODE")
-        List<String[]> list =Api.getStockData(120, Storage.getIteam("CODE")) ; // load all elements in a list
+        List<String[]> list =Api.getStockData(70, Storage.getIteam("CODE")) ; // load all elements in a list
         double[] nums = new double[VECTOR_SIZE];
         for (String[] arr : list) {
             for (int i = 0; i < arr.length - 1; i++) {

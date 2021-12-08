@@ -13,13 +13,17 @@ public class Storage {
     private static String codeStorage="005930";
     private static String stockNameStorage;
     private static String stockPayment;
-    private static ArrayList<ArrayList<String>> selectResult= new ArrayList<>();
+    private static ArrayList<ArrayList<String>> portfolio= new ArrayList<>();
     private static ResultSet resultSet;
+    private static ArrayList<ArrayList<String>> stockMenu= new ArrayList<>();
 
     public static void makeStorage(){
         storage =new Storage();
     }
-
+    public static void setStockMenu(ArrayList<ArrayList<String>>list){
+        stockMenu=list;
+    }
+    public static ArrayList<ArrayList<String>> getStockMenu(){return stockMenu;}
     public static void setId(String name){
         IDStorage=name;
     }
@@ -36,21 +40,18 @@ public class Storage {
         stockNameStorage= stockName;
     }
     public static void setStockPayment(String  pay){stockPayment=pay;}
-    public static void setSelectResult(ArrayList<ArrayList<String>> result){
-        selectResult=result;
+    public static void setPortfolio(ArrayList<ArrayList<String>> result){
+        portfolio=result;
     }
     public static void setResultSet(ResultSet resultSet) {
         Storage.resultSet = resultSet;
     }
-
-    public static ArrayList<ArrayList<String>> getSelectResult() {
-        return selectResult;
+    public static ArrayList<ArrayList<String>> getPortfolio() {
+        return portfolio;
     }
-
     public static ResultSet getResultSet() {
         return resultSet;
     }
-
     public static String getIteam(String select){
         switch (select){
             case "ID":

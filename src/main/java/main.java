@@ -1,5 +1,21 @@
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import DatabaseQuery.QueryCommandController;
+import DatabaseQuery.Querys.DeleteQuery.DeleteStockCodeQuery;
+import DatabaseQuery.Querys.DeleteQuery.DeleteUserQuery;
+import DatabaseQuery.Querys.InsertQuery.InsertStockCodeQuery;
+import DatabaseQuery.Querys.InsertQuery.InsertUserInfoQuery;
+import DatabaseQuery.Querys.InsertQuery.InsertUserQuery;
+import DatabaseQuery.Querys.SelectQuery.SelectStockCodeQuery;
+import DatabaseQuery.Querys.SelectQuery.SelectUserInfoQuery;
+import DatabaseQuery.commands.DeleteCommand.DeleteStockCodeCommand;
+import DatabaseQuery.commands.DeleteCommand.DeleteUserCommand;
+import DatabaseQuery.commands.InsertCommand.InsertStockCodeCommand;
+import DatabaseQuery.commands.InsertCommand.InsertUserCommand;
+import DatabaseQuery.commands.InsertCommand.InsertUserInfoCommand;
+import DatabaseQuery.commands.SelectCommand.SelectStockCodeCommand;
+import DatabaseQuery.commands.SelectCommand.SelectUserInfoCommand;
 import Login.Account.Account;
 import Database.DatabaseAcessObject;
 import Login.*;
@@ -10,8 +26,11 @@ import clearScreen.*;
 
 public class main {
     public static void main(String[] args) throws Exception {
+        init();
+        if (DatabaseAcessObject.connectDatabase()==0){
+            return;
+        }
         Account account;
-        DatabaseAcessObject.connectDatabase();
         AccountFactory accountFactory = new AccountFactory();
 
         System.out.println("User Login : 1");
@@ -34,5 +53,15 @@ public class main {
         catch (Exception e){
             e.printStackTrace();
         }
+    }
+    public static void init() throws SQLException {
+        SelectStockCodeCommand selectStockCodeCommand= new SelectStockCodeCommand(new SelectStockCodeQuery());
+        SelectUserInfoCommand selectUserInfoCommand= new SelectUserInfoCommand(new SelectUserInfoQuery());
+        InsertStockCodeCommand insertStockCodeCommand = new InsertStockCodeCommand(new InsertStockCodeQuery());
+        InsertUserCommand insertUserCommand = new InsertUserCommand(new InsertUserQuery());
+        InsertUserInfoCommand insertUserInfoCommand = new InsertUserInfoCommand(new InsertUserInfoQuery());
+        DeleteUserCommand deleteUserCommand = new DeleteUserCommand(new DeleteUserQuery());
+        DeleteStockCodeCommand deleteStockCodeCommand = new DeleteStockCodeCommand(new DeleteStockCodeQuery());
+        QueryCommandController.setCommand(selectUserInfoCommand,selectStockCodeCommand,insertStockCodeCommand,insertUserCommand,insertUserInfoCommand,deleteStockCodeCommand,deleteUserCommand);
     }
 }

@@ -5,10 +5,9 @@ import Database.DBAminDAO;
 import Storage.Storage;
 import UI.*;
 import clearScreen.clearScreen;
-
 import java.util.Scanner;
 
-public class AIAdminLogin extends Person<AIAdminDAO> implements  Login{
+public class AIAdminLogin implements  Login{
 
     @Override
     public void setInfo() {
@@ -30,10 +29,5 @@ public class AIAdminLogin extends Person<AIAdminDAO> implements  Login{
         catch (Exception e){
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void doCall() {
-
     }
 }

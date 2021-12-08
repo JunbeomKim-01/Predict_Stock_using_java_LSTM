@@ -24,7 +24,4 @@ public class AdminAccount implements Account {
                 break;
         }
     }
-
-    public AdminAccount(int select){
-    }
 }

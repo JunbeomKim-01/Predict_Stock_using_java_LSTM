@@ -21,7 +21,6 @@ public class DBAdminInterface implements UI{
             switch (select){
                 case 1:
                     clearScreen.clear();
-                    //System.out.println("1: 회원 수정");
                     System.out.println("1: 회원 삭제");
                     Scanner scanner1= new Scanner(System.in);
                     MamberManagemenet mamberManagemenet = new MamberManagemenet(scanner1.nextInt());

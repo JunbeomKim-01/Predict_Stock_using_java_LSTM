@@ -4,28 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 import Database.DatabaseAcessObject;
-import DatabaseQuery.Context;
-import DatabaseQuery.InsertQuery;
+
+import DatabaseQuery.QueryCommandController;
 
 public class LoginControll {
-
     static Connection con =DatabaseAcessObject.getConnection();
-
-//   public static Login call(int userInput) throws Exception {
-//        switch (userInput) {
-//            case 1:
-//                return new UserLogin();
-//            case 2:
-//                return new DBAdminLogin();
-//            case 3:
-//                return new AIAdminLogin();
-//        }
-//        return null;
-//    }
-
+    static QueryCommandController queryCommandController = QueryCommandController.getQueryController();
     public static int memberCheck(String id)throws Exception{
         String query="SELECT id FROM User Where id=?";
         try {
@@ -43,17 +29,12 @@ public class LoginControll {
         }
        return 0;
     }
-
     public static void createAccount()throws SQLException, Exception {//회원가입
         try{
-            Context context = new Context(new InsertQuery());
-            context.excuteQuery("User",null);
-
+            queryCommandController.insertUser();
         }
         catch (SQLException e){
             e.printStackTrace();
         }
-
-
     }
 }

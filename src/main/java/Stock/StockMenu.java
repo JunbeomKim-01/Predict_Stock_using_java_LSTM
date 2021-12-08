@@ -1,28 +1,24 @@
 package Stock;
 import AI.StockPrediction;
-import Database.DatabaseAcessObject;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import DatabaseQuery.QueryCommandController;
 import Storage.*;
 import clearScreen.*;
-import Data.*;
+
 
 public class StockMenu implements Menu{
-    ArrayList<String> menuList= new ArrayList<>();
+    ArrayList<ArrayList<String>> menuList= new ArrayList<>();
     String query;
-    public void selectMenu(){
+    public void selectMenu() throws Exception {
+        QueryCommandController queryCommandController = QueryCommandController.getQueryController();
+        queryCommandController.selectStockCode();
         System.out.println("원하시는 종목을 고르시오");
         Scanner scanner = new Scanner(System.in);
         int select = scanner.nextInt();
-        Crawling crawling = new Crawling();
-        Storage.setStockName(menuList.get(select-1));//주식 이름 저장
-        crawling.codeCrawling();// 저장된 주식이름으로 주식코드 설정
+        ArrayList<String> list = menuList.get(0);
+        Storage.setStockName(list.get(select-1));//주식 이름 저장-> 저장된 주식이름으로 주식코드 설정(크롤링이 불법적인 관계로 흉내만 내봤습니다)
     }
     public void selectPrice() throws Exception {
        try{
@@ -41,13 +37,19 @@ public class StockMenu implements Menu{
     }
    public void showMenu() {
         try {
-            menuList= getMenu();
+            //TODO <- 이부분도 프로토타입으로 주식종목
+            QueryCommandController queryCommandController = QueryCommandController.getQueryController();
+            queryCommandController.selectStockCode();
+            menuList= Storage.getStockMenu();
             int index=1;
             clearScreen.clear();
             System.out.println("[상장된 종목]");
-            for(String list: menuList){
-                System.out.println(index+": "+ list);
-                index++;
+            for(ArrayList<String> a : menuList){
+                for(String list :a){
+                    System.out.println(index+": "+list);
+                    index++;
+                }
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,14 +57,4 @@ public class StockMenu implements Menu{
             e.printStackTrace();
         }
    }
-    ArrayList<String> getMenu() throws SQLException {
-        query="SELECT * FROM StockCode ";
-        Connection connection= DatabaseAcessObject.getConnection();
-        PreparedStatement preparedStatement=connection.prepareStatement(query);
-        ResultSet resultSet= preparedStatement.executeQuery();
-        while (resultSet.next()){
-            menuList.add(resultSet.getString("NAME"));
-        }
-        return menuList;
-    }
 }

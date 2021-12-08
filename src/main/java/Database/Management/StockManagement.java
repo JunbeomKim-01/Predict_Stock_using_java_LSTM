@@ -1,16 +1,14 @@
 package Database.Management;
 
 import Database.DatabaseAcessObject;
-import DatabaseQuery.Context;
-import DatabaseQuery.DeletQuery;
-import DatabaseQuery.InsertQuery;
-import java.util.Scanner;
-import java.sql.SQLException;
-import clearScreen.*;
 
-public class StockManagement extends DatabaseAcessObject
+import DatabaseQuery.QueryCommandController;
+
+public class StockManagement
 {
+    QueryCommandController queryCommandController;
     public StockManagement(int select) throws Exception {
+        queryCommandController = QueryCommandController.getQueryController();
         switch (select){
             case 1:
                 addStock();
@@ -22,17 +20,12 @@ public class StockManagement extends DatabaseAcessObject
     }
 
     void addStock() throws Exception {
-        Context context = new Context(new InsertQuery());
-        context.excuteQuery("StockCode",null);
+        queryCommandController.insertStockCode();
     }
     void deletStock() throws Exception {
-        Context context = new Context(new DeletQuery());
-        context.excuteQuery("StockCode",null);
-
-    }
-
-    @Override
-    protected boolean Authoirity(String query) {
-        return false;
+        //TODO <- 이부분 주석 지워야함
+//        queryCommandController.setQuery(new DeletQuery());
+//        queryCommandController.query("StockCode",null);
+        queryCommandController.deleteStockCode();
     }
 }
